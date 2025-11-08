@@ -26,6 +26,14 @@ class CartService
     }
 
     }
+
+    public function getCartItems(): array
+    {
+        $cartId = $this->getCartId();
+        return ORM::forTable('cart_items')->where([
+            'cart_id' => $cartId
+        ])->findArray();
+    }
 protected function getCartId():int
     {
         if (isset($_COOKIE['cart_id'])) {

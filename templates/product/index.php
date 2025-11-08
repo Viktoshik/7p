@@ -15,7 +15,8 @@
         <?=$product['category_id']?>
         <a href="/product/<?=$product['id']?>">Подробнее</a>
 
-    <?php if ():?>
+    <?php if (array_key_exists($product['id'], $cartItems)): ?>:?>
+
 
         <form action="/cart/minus" method="post">
             <input type="hidden" name="product_id" value="<?=$product['id']?>">
@@ -28,11 +29,12 @@
             <input type="hidden" name="product_id" value="<?=$product['id']?>">
             <input type="submit" value="+">
         </form>
-
+    <?php else:?>
         <form action="/cart/add" method="post">
             <input type="hidden" name="product_id" value="<?=$product['id']?>">
             <input type="submit" value="Добавить в корзину">
         </form>
+    <?php endif;?>
     <?php endforeach;?>
 </body>
 </html>

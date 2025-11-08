@@ -3,16 +3,18 @@
 namespace Src\Controllers;
 
 use DI\Container;
+use http\Message;
 use ORM;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Views\PhpRenderer;
+use Src\Services\CartService;
 
 class ProductController extends Controller
 {
-    public function __construct(PhpRenderer $renderer)
+    public function __construct(PhpRenderer $renderer, private CartService $cartService)
     {
-        parent::__construct($renderer, $flash);
+        parent::__construct($renderer);
     }
 
     public function index(
@@ -21,13 +23,10 @@ class ProductController extends Controller
     )
     {
         $products = ORM::forTable('products')->findMany();
+        $cartItems = $this->cartService->getCartItems();
         return $this->renderer->render($response, 'product/index.php', [
-            'products' => $products
+            'products' => $products,
+            'cartItems' => $cartItems,
         ]);
-    }
-    public function getCartItems(): array
-    {
-     $cartId = $this->getCartId();
-     return ORM::forTable('cart_items')->where('')
     }
 }
