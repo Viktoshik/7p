@@ -6,6 +6,7 @@ use ORM;
 
 class CartService
 {
+    private const COOKIE_NAME = 'cart_id';
     public function add(int $productId): void
     {
     $cartId = $this->getCartId();
@@ -27,12 +28,40 @@ class CartService
 
     }
 
+    public function minus(int $productId): void{
+        $cartId = $this->getCartId();
+        $cart_item = ORM::forTable('cart_items')->where([
+            'cart_id' => $cartId,
+            'product_id' => $productId
+        ])->find_one();
+        if (!$cart_item) {
+            return;
+        }
+        if ($cart_item['count'] > 1) {
+            $cart_item->set([
+                'count' => $cart_item['count'] - 1,
+            ])->save();
+        }else{
+            $cart_item->delete();
+        }
+    }
+
     public function getCartItems(): array
     {
         $cartId = $this->getCartId();
         return ORM::forTable('cart_items')->where([
             'cart_id' => $cartId
         ])->findArray();
+    }
+
+    public function getGroupedItems(): array
+    {
+        $cartItems = $this->getCartItems();
+        $result=[];
+        foreach ($cartItems as $cartItem) {
+            $result[$cartItem['product_id']]=$cartItem['count'];
+        }
+        return $result;
     }
 protected function getCartId():int
     {

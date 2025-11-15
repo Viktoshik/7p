@@ -27,4 +27,13 @@ class CartController extends Controller
         $this->cartService->add($productId);
         return $response->withHeader('Location', '/')->withStatus(302);
     }
+    public function minus(
+        RequestInterface $request,
+        ResponseInterface $response,
+    )
+    {
+        $productId = $request->getParsedBody()['product_id'];
+        $this->cartService->minus($productId);
+        return $response->withHeader('Location', '/')->withStatus(302);
+    }
 }

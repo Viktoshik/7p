@@ -8,8 +8,16 @@
     <title>Document</title>
 </head>
 <body>
-<div>
+    <div>
+        <?php if(empty($_SESSION['user_id'])): ?>
+            <a href="/login">Вход</a>
+            <a href="/register">Регистрация</a>
+        <?php else:?>
+            <a href="/logout">Выход</a>
+            <a href="/">Корзина</a>
+        <?php endif;?>
+        <a href="/">Главная</a>
+    </div>
     <?=$content?>
-</div>
 </body>
 </html>

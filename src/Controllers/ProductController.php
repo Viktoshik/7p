@@ -23,10 +23,30 @@ class ProductController extends Controller
     )
     {
         $products = ORM::forTable('products')->findMany();
-        $cartItems = $this->cartService->getCartItems();
+        $cartItems = $this->cartService->getGroupedItems();
         return $this->renderer->render($response, 'product/index.php', [
             'products' => $products,
             'cartItems' => $cartItems,
         ]);
+    }
+    public function show(
+        RequestInterface $request,
+        ResponseInterface $response,
+        array $args
+    )
+    {
+        $id = $args['id'];
+        $product = ORM::forTable('products')->findOne([$id]);
+        return $this->renderer->render($response, 'product/show.php', [
+            'product' => $product,
+        ]);
+    }
+    public function logout(
+        RequestInterface $request,
+        ResponseInterface $response
+    )
+    {
+        session_unset();
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 }

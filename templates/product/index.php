@@ -9,13 +9,14 @@
 </head>
 <body>
     <h1>Список всех товаров</h1>
+    <p><a href="/product/cartItems">Перейти в корзину</a></p>
     <?php foreach ($products as $product): ?>
         <?=$product['name']?>
         <?=$product['price']?>
         <?=$product['category_id']?>
         <a href="/product/<?=$product['id']?>">Подробнее</a>
 
-    <?php if (array_key_exists($product['id'], $cartItems)): ?>:?>
+    <?php if (array_key_exists($product['id'], $cartItems)): ?>
 
 
         <form action="/cart/minus" method="post">
@@ -23,7 +24,7 @@
             <input type="submit" value="-">
         </form>
 
-    <span>3</span>
+    <span><?=$cartItems[$product['id']]?></span>
 
         <form action="/cart/add" method="post">
             <input type="hidden" name="product_id" value="<?=$product['id']?>">
