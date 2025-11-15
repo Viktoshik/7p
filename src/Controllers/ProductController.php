@@ -47,6 +47,6 @@ class ProductController extends Controller
     )
     {
         session_unset();
-        return $response->withHeader('Location', '/')->withStatus(302);
+        return $response->withHeader('Location', $request->getHeaderLine('Referer'))->withStatus(302);
     }
 }

@@ -36,4 +36,14 @@ class CartController extends Controller
         $this->cartService->minus($productId);
         return $response->withHeader('Location', '/')->withStatus(302);
     }
+    public function index(
+        RequestInterface $request,
+        ResponseInterface $response,
+    )
+    {
+        $cartItems = $this->cartService->getCartItems();
+        return $this->renderer->render($response, '/product/cartItems.php', [
+            'cartItems' => $cartItems
+        ]);
+    }
 }

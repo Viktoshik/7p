@@ -9,10 +9,29 @@
 </head>
 <body>
     <h1>Корзина</h1>
+    <form action="/order" method="post">
+        <input type="submit" value="Заказать">
+    </form>
     <table>
         <tr>
-            <td>Товар</td>
-            <td>Количество</td>
+            <?php foreach ($cartItems as $cartItem): ?>
+                <td>
+                    <?=$cartItem['product_name']?>
+                    <a href="/product/<?=$cartItem['product_id']?>">Перейти</a>
+                    <form action="/cart/minus" method="post">
+                        <input type="hidden" name="product_id" value="<?=$cartItem['product_id']?>">
+                        <input type="submit" value="-">
+                    </form>
+                    <span><?=$cartItem['count']?></span>
+                    <form action="/cart/add" method="post">
+                        <input type="hidden" name="product_id" value="<?=$cartItem['product_id']?>">
+                        <input type="submit" value="+">
+                    </form>
+                    <form action="/cart/add" method="post">
+                        <input type="hidden" name="product_id" value="<?=$cartItem['product_id']?>">
+                    </form>
+                </td>
+            <?php endforeach;?>
         </tr>
     </table>
 </body>

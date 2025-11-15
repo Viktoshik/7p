@@ -5,6 +5,7 @@ use Slim\Factory\AppFactory;
 use Slim\Views\PhpRenderer;
 use Src\Controllers\CartController;
 use Src\Controllers\LoginController;
+use Src\Controllers\NoteController;
 use Src\Controllers\ProductController;
 use Src\Controllers\RegisterController;
 
@@ -28,10 +29,15 @@ $app->get('/register', [RegisterController::class, 'index']);
 $app->post('/register', [RegisterController::class, 'register']);
 $app->get('/login', [LoginController::class, 'index']);
 $app->post('/login', [LoginController::class, 'login']);
-$app->get('/logout', [ProductController::class, 'logout']);
+
+$app->group('/admin', function () use ($app) {
+    $app->get('/notes', [NoteController::class, 'index']);
+    $app->get('/logout', [ProductController::class, 'logout']);
+});
 
 $app->get('/', [ProductController::class, 'index']);
 $app->get('/cart', [ProductController::class, 'index']);
+$app->get('/product/cartItems', [CartController::class, 'index']);
 $app->post('/cart/add', [CartController::class, 'add']);
 $app->post('/cart/minus', [CartController::class, 'minus']);
 $app->get('/product/{id}', [ProductController::class, 'show']);

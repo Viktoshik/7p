@@ -65,10 +65,24 @@ class CartService
     }
 protected function getCartId():int
     {
+        $userId = $_SESSION['user_id']??null;
+        if (isset($user_id))
+        {
+            $currentCart = ORM::forTable('carts')->where([
+                'user_id' => $userId,
+                'status' => 'active',
+            ])->find_one();
+            if ($currentCart){
+                return $currentCart['id'];
+            }
+        }
+
         if (isset($_COOKIE['cart_id'])) {
             return $_COOKIE['cart_id'];
         }
-        $cart = \ORM::forTable('carts')->create();
+        $cart = \ORM::forTable('carts')->create([
+            'user_id' => $userId,
+        ]);
         $cart->save();
 
         setcookie('cart_id', $cart->id, time() + 60 * 60 * 24 * 31);
