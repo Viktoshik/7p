@@ -6,6 +6,7 @@ use Slim\Views\PhpRenderer;
 use Src\Controllers\CartController;
 use Src\Controllers\LoginController;
 use Src\Controllers\NoteController;
+use Src\Controllers\OrderController;
 use Src\Controllers\ProductController;
 use Src\Controllers\RegisterController;
 
@@ -41,5 +42,7 @@ $app->get('/product/cartItems', [CartController::class, 'index']);
 $app->post('/cart/add', [CartController::class, 'add']);
 $app->post('/cart/minus', [CartController::class, 'minus']);
 $app->get('/product/{id}', [ProductController::class, 'show']);
+$app->get('/orders', [OrderController::class, 'store']);
+$app->get('/orders/index', [OrderController::class, 'index']);
 
 $app->run();

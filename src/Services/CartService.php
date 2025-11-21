@@ -49,7 +49,12 @@ class CartService
     public function getCartItems(): array
     {
         $cartId = $this->getCartId();
-        return ORM::forTable('cart_items')->where([
+        return ORM::forTable('cart_items')
+            ->select('cart_items.*')
+            ->select('products.name', 'product_name')
+            ->select('products.price', 'product_price')
+            ->join('products', ['cart_items.product_id', '=', 'products.id'])
+            ->where([
             'cart_id' => $cartId
         ])->findArray();
     }

@@ -14,7 +14,7 @@
             <a href="/register">Регистрация</a>
         <?php else:?>
             <a href="/logout">Выход</a>
-            <a href="/">Корзина</a>
+            <a href="/product/cartItems">Корзина</a>
         <?php endif;?>
         <a href="/">Главная</a>
     </div>
