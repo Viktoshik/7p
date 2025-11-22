@@ -5,9 +5,18 @@ namespace Src\Controllers;
 use ORM;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Views\PhpRenderer;
+use Src\Services\CartService;
 
 class RegisterController extends Controller
 {
+    public function __construct(
+        PhpRenderer $renderer,
+        protected CartService $cartService
+    )
+    {
+        parent::__construct($renderer);
+    }
     public function setLayout():void
     {
 
@@ -28,6 +37,7 @@ class RegisterController extends Controller
             'phone' => $request->getParsedBody()['phone'],
             'password' => $request->getParsedBody()['password'],
         ])->save();
+        $cartItems = $this->cartService->getCartId();
         return $response->withHeader('Location', '/login')->withStatus(302);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Src\Controllers;
 
-use http\Message;
 use ORM;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -13,11 +12,10 @@ class OrderController extends Controller
 {
     public function __construct(
         PhpRenderer $renderer,
-        Messages $flash,
         protected CartService $cartService,
     )
     {
-       parent::__construct($renderer, $flash);
+       parent::__construct($renderer);
     }
     public function store(
         RequestInterface $request,
@@ -65,8 +63,8 @@ class OrderController extends Controller
 
         $orderItemsGrouped = [];
 
-        foreach ($orderItems as $orderItem) {
-            $orderItemsGrouped[$orderItem['cart_id']][] = $orderItem;
+        foreach ($cartItems as $cartItem) {
+            $orderItemsGrouped[$cartItem['cart_id']][] = $cartItem;
         }
         return $this->renderer->render($response, 'orders.php', [
             'orders' => $orders,

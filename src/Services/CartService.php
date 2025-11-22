@@ -68,7 +68,7 @@ class CartService
         }
         return $result;
     }
-protected function getCartId():int
+public function getCartId():int
     {
         $userId = $_SESSION['user_id']??null;
         if (isset($user_id))
@@ -90,7 +90,7 @@ protected function getCartId():int
         ]);
         $cart->save();
 
-        setcookie('cart_id', $cart->id, time() + 60 * 60 * 24 * 31);
+        setcookie(self::COOKIE_NAME, $cart->id, time() + 60 * 60 * 24 * 31);
         return $cart->id;
     }
 }

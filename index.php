@@ -42,7 +42,8 @@ $app->get('/product/cartItems', [CartController::class, 'index']);
 $app->post('/cart/add', [CartController::class, 'add']);
 $app->post('/cart/minus', [CartController::class, 'minus']);
 $app->get('/product/{id}', [ProductController::class, 'show']);
-$app->get('/orders', [OrderController::class, 'store']);
-$app->get('/orders/index', [OrderController::class, 'index']);
+$app->get('/orders', [OrderController::class, 'index']);
+$app->post('/orders', [OrderController::class, 'store']);
+
 
 $app->run();
