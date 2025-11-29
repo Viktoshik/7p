@@ -6,4 +6,3 @@
     <button type="submit">Авторизоваться</button>
 </form>
 <a href="/register"><button>Зарегистрироваться</button></a>
-

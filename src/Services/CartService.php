@@ -75,7 +75,6 @@ public function getCartId():int
         {
             $currentCart = ORM::forTable('carts')->where([
                 'user_id' => $userId,
-                'status' => 'active',
             ])->find_one();
             if ($currentCart){
                 return $currentCart['id'];

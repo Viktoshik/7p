@@ -47,6 +47,7 @@ class ProductController extends Controller
     )
     {
         session_unset();
+        setcookie('cart_id', '', time() + 10);
         return $response->withHeader('Location', $request->getHeaderLine('Referer'))->withStatus(302);
     }
 }

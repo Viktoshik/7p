@@ -30,6 +30,8 @@ class LoginController extends Controller
             return $response->withHeader('Location', '/login')->withStatus(302);
         }
         $_SESSION['user_id'] = $user['id'];
+        $cart_id = ORM::forTable('carts')->where('user_id', $user['id'])->find_one();
+        setcookie('cart_id', $cart_id, time() + 10);
         return $response->withHeader('Location', '/')->withStatus(302);
     }
 }

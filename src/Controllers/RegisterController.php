@@ -37,7 +37,7 @@ class RegisterController extends Controller
             'phone' => $request->getParsedBody()['phone'],
             'password' => $request->getParsedBody()['password'],
         ])->save();
-        $cartItems = $this->cartService->getCartId();
+        $cartId= $this->cartService->getCartId();
         return $response->withHeader('Location', '/login')->withStatus(302);
     }
 }

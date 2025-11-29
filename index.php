@@ -31,8 +31,11 @@ $app->post('/register', [RegisterController::class, 'register']);
 $app->get('/login', [LoginController::class, 'index']);
 $app->post('/login', [LoginController::class, 'login']);
 
-$app->group('/admin', function () use ($app) {
-    $app->get('/notes', [NoteController::class, 'index']);
+$app->group('/', function () use ($app) {
+    $app->get('/order', [OrderController::class, 'index']);
+    $app->post('/order', [OrderController::class, 'store']);
+    $app->get('/payment/{id}', [OrderController::class, 'success']);
+
     $app->get('/logout', [ProductController::class, 'logout']);
 });
 
@@ -42,8 +45,5 @@ $app->get('/product/cartItems', [CartController::class, 'index']);
 $app->post('/cart/add', [CartController::class, 'add']);
 $app->post('/cart/minus', [CartController::class, 'minus']);
 $app->get('/product/{id}', [ProductController::class, 'show']);
-$app->get('/orders', [OrderController::class, 'index']);
-$app->post('/orders', [OrderController::class, 'store']);
-
 
 $app->run();
